@@ -13,7 +13,7 @@ class Product {
 
 public:
 
-    Product(string n, float p, int s): name{std::move(n)}, price{p}/*, inStock{s}*/{};
+    Product(string n, string c, float p, bool a): name{move(n)}, category(move(c)), price{p}, available{a}{};
 
     float getPrice() const {
         return price;
@@ -27,30 +27,24 @@ public:
         return name;
     }
 
-    void setName(const string &name) {
-        Product::name = name;
+    void setName(const string &n) {
+        Product::name = n;
     }
 
-    /*
-    int getInStock() const {
-        return inStock;
+    bool getAvailable() const {
+        return available;
     }
 
-    void setInStock(int i) {
-        inStock = i;
+    void setAvailable(int i) {
+        available = i;
     }
 
-    bool checkAvailable(int demand) const{
-        if (inStock < demand)
-            return false;
-        return true;
-    }
-    */
 private:
 
     string name;
+    string category;
     float price;
-
+    bool available;
 };
 
 

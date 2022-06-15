@@ -15,9 +15,9 @@ class Subject {
 
 public:
 
-    virtual void registerObserver(shared_ptr<Observer> o) = 0;
+    virtual void registerObserver(Observer* o) = 0;
 
-    virtual void removeObserver(shared_ptr<Observer> o) = 0;
+    virtual void removeObserver(Observer* o) = 0;
 
     virtual void notifyObserver() = 0;
 

@@ -20,7 +20,7 @@ public:
         cout << "List " << list << "has been modified." << endl;
     }
 
-    shared_ptr<ShoppingList> findList(string& name) {
+    shared_ptr<ShoppingList> findList(string& name) const{
         for (auto const &s: shoppingLists)
             if (s->getListName() == name)
                 return s;
@@ -28,26 +28,41 @@ public:
         return nullptr;
     }
 
-    void addProductToList(string& name, unique_ptr<Product> product, int quantity){
+    void addProductToList(string& name, unique_ptr<Product> product, int quantity) const{
         shared_ptr<ShoppingList> s = findList(name);
         if (s != nullptr){
                 s->addProduct(std::move(product), quantity);
-                cout << "Product added to list " << name << "." << endl;
+                cout << "Products added to list " << name << "." << endl;
             }
     }
 
-    void removeProductFromList(string& name, unique_ptr<Product> product, int quantity) {
+    void removeProductFromList(string& name, unique_ptr<Product> product, int quantity) const {
         shared_ptr<ShoppingList> s = findList(name);
         if(s != nullptr) {
-            if(s->checkProduct(product->getName()) != nullptr) {
+            //if(s->findProduct(product->getName()) != nullptr) {
                 s->removeProduct(std::move(product), quantity);
-                cout << "Product removed from list " << name << endl;
+                cout << "Products removed from list " << name << endl;
+            //}
+        }
+    }
+
+    void addList(shared_ptr<ShoppingList>& list){
+        bool found = false;
+        for (auto const &s : shoppingLists) {
+            if (list->getListName() == s->getListName()) {
+                found = true;
             }
         }
+        if (found)
+            cout << list->getListName() << " already exists." << endl;
+        else
+            shoppingLists.push_back(list);
     }
 
 private:
     list<shared_ptr<ShoppingList>> shoppingLists;
+
+
 };
 
 
