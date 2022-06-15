@@ -21,9 +21,11 @@ private:
 
     string listName;
     list<Observer*> observers;
-    map<unique_ptr<Product>, int> products;
+    std::map<Product*, int> products;
 
 public:
+
+    explicit ShoppingList(string l):listName(std::move(l)){};
 
     void notifyObserver() override{
         for(auto const& o : observers)
@@ -46,14 +48,14 @@ public:
         listName = list;
     }
 
-    const map<unique_ptr<Product>, int> &getProducts() const {
+    const map<Product*, int> &getProducts() const {
         return products;
     }
 
-    virtual void addProduct(unique_ptr<Product> p, int quantity){
+    virtual void addProduct(Product* p, int quantity){
         auto product = products.find(p);
         if (products.find(p) == products.end())
-            products.emplace(move(p), quantity);
+            products.emplace(p, quantity);
         else{
             product->second += quantity;
         }
@@ -70,11 +72,11 @@ public:
         notifyObserver();
     }*/
 
-    virtual void removeProduct(unique_ptr<Product> p, int quantity){
+   virtual void removeProduct(Product* p, int quantity){
         auto product = products.find(p);
         if (products.find(p) != products.end()) {
             product->second -= quantity;
-            if (quantity <= 0)
+            if (product->second <= 0)
                 products.erase(p);
         }
         notifyObserver();

@@ -16,32 +16,36 @@ class Client : public Observer{
 
 public:
 
+    explicit Client(string n = ""): name(move(n)){
+        //for(auto const& i: shoppingLists)
+    };
+
     void update(string list) override{
         cout << "List " << list << "has been modified." << endl;
     }
 
-    shared_ptr<ShoppingList> findList(string& name) const{
+    shared_ptr<ShoppingList> findList(string listName) const{
         for (auto const &s: shoppingLists)
-            if (s->getListName() == name)
+            if (s->getListName() == listName)
                 return s;
-        cout << "List " << name << "not found." << endl;
+        cout << "List " << listName << "not found." << endl;
         return nullptr;
     }
 
-    void addProductToList(string& name, unique_ptr<Product> product, int quantity) const{
-        shared_ptr<ShoppingList> s = findList(name);
+    void addProductToList(string listName, Product* product, int quantity) const{
+        shared_ptr<ShoppingList> s = findList(listName);
         if (s != nullptr){
-                s->addProduct(std::move(product), quantity);
-                cout << "Products added to list " << name << "." << endl;
+                s->addProduct(product, quantity);
+                cout << "Product " << product->getName() << " added to list " << listName << "." << endl;
             }
     }
 
-    void removeProductFromList(string& name, unique_ptr<Product> product, int quantity) const {
-        shared_ptr<ShoppingList> s = findList(name);
+    void removeProductFromList(string listName, Product* product, int quantity) const {
+        shared_ptr<ShoppingList> s = findList(listName);
         if(s != nullptr) {
             //if(s->findProduct(product->getName()) != nullptr) {
-                s->removeProduct(std::move(product), quantity);
-                cout << "Products removed from list " << name << endl;
+                s->removeProduct(product, quantity);
+                cout << "Product " << product->getName() << " removed from list " << listName << endl;
             //}
         }
     }
@@ -55,13 +59,16 @@ public:
         }
         if (found)
             cout << list->getListName() << " already exists." << endl;
-        else
+        else {
             shoppingLists.push_back(list);
+            cout << "List " << list->getListName() << " added." << endl;
+        }
     }
 
 private:
-    list<shared_ptr<ShoppingList>> shoppingLists;
 
+    string name;
+    list<shared_ptr<ShoppingList>> shoppingLists;
 
 };
 

@@ -13,7 +13,7 @@ class Product {
 
 public:
 
-    Product(string n, string c, float p, bool a): name{move(n)}, category(move(c)), price{p}, available{a}{};
+    Product(string n, string c, float p, bool a = true): name{move(n)}, category(move(c)), price{p}, available{a}{};
 
     float getPrice() const {
         return price;
