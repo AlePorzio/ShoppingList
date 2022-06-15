@@ -23,6 +23,14 @@ public:
         price = p;
     }
 
+    const string &getName() const {
+        return name;
+    }
+
+    void setName(const string &name) {
+        Product::name = name;
+    }
+
     /*
     int getInStock() const {
         return inStock;

@@ -8,6 +8,7 @@
 #include <list>
 #include <memory>
 #include <string>
+#include <map>
 #include "Subject.h"
 #include "Observer.h"
 #include "Product.h"
@@ -19,7 +20,7 @@ private:
 
     string listName;
     list<unique_ptr<Observer>> observers;
-    list<unique_ptr<Product>> products;
+    map<unique_ptr<Product>, int> products;
 
 public:
 
@@ -32,12 +33,19 @@ public:
     }
 
     virtual void addProduct(unique_ptr<Product> p, int quantity){
-        products.push_back(move(p));
+        products.emplace(move(p), quantity);
         notifyObserver();
     }
 
+    virtual void changeQuantity(unique_ptr<Product> p, int quantity){
+        auto it = products.find(p);
+        it->second = quantity;
+        if (quantity <= 0)
+            products.erase(p);
+    }
+
     virtual void removeProduct(unique_ptr<Product> p, int quantity){
-        products.remove(p);
+        products.erase(p);
         notifyObserver();
     }
 
@@ -46,6 +54,13 @@ public:
             o->update(listName);
     }
 
+    const unique_ptr<Product>& checkProduct(const string& name){
+        for(auto const& p : products)
+            if (p.first->getName() == name){
+                return std::move(p.first);
+            }
+        return nullptr;
+    }
 };
 
 
