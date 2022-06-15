@@ -7,6 +7,7 @@
 
 #include <list>
 #include <memory>
+#include <string>
 #include "Subject.h"
 #include "Observer.h"
 #include "Product.h"
@@ -16,25 +17,35 @@ class ShoppingList : public Subject {
 
 private:
 
+    string listName;
     list<unique_ptr<Observer>> observers;
     list<unique_ptr<Product>> products;
 
 public:
 
-    virtual void addProduct(unique_ptr<Product> p){
+    const string &getListName() const {
+        return listName;
+    }
+
+    void setListName(const string& list) {
+        listName = list;
+    }
+
+    virtual void addProduct(unique_ptr<Product> p, int quantity){
         products.push_back(move(p));
         notifyObserver();
     }
 
-    virtual void removeProduct(unique_ptr<Product> p){
+    virtual void removeProduct(unique_ptr<Product> p, int quantity){
         products.remove(p);
         notifyObserver();
     }
 
     void notifyObserver() override{
         for(auto const& o : observers)
-            o->update();
+            o->update(listName);
     }
+
 };
 
 
