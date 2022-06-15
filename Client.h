@@ -11,24 +11,19 @@
 
 using namespace std;
 
-class Client : public Subject{
+class Client : public Observer{
 
 public:
-    virtual void registerObserver(shared_ptr<Observer> o) override{
-        shoppingLists.push_back(o);
-    }
 
-    virtual void removeObserver(shared_ptr<Observer> o) override{
-        shoppingLists.remove(o);
-    }
+    Client():listChanged{false}{};
 
-    virtual void notifyObserver(shared_ptr<Observer> o) override{
-        o->update();
+    void update() override{
+        listChanged = true;
     }
 
 private:
+    bool listChanged;
     list<shared_ptr<Observer>> shoppingLists;
-
 };
 
 
