@@ -8,9 +8,6 @@
 
 class Product {
 
-public:
-
-
 };
 
 
