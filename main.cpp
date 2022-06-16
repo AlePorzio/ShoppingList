@@ -6,8 +6,8 @@
 int main() {
     Product milk("Skimmed Milk", "Dairy", 1.3);
     Product meat ("Beef", "Meat", 3.8);
-    Product tomato ("Round Tomatoes", "Vegetables", 2,0);
-    Product cheese("Parmesan", "Dairy", 2,6);
+    Product tomato ("Round Tomatoes", "Vegetables", 2);
+    Product cheese("Parmesan", "Dairy", 2);
 
     unique_ptr<Client> client(new Client("Ale"));
     shared_ptr<ShoppingList> shoppingList (new ShoppingList("ListaSpesa"));

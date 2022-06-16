@@ -52,43 +52,10 @@ public:
         return products;
     }
 
-    virtual void addProduct(Product* p, int quantity){
-        auto product = products.find(p);
-        if (products.find(p) == products.end())
-            products.emplace(p, quantity);
-        else{
-            product->second += quantity;
-        }
-        notifyObserver();
-    }
+    virtual void addProduct(Product* p, int quantity);
 
-    /*virtual void changeQuantity(unique_ptr<Product> p, int quantity){
-        auto product = products.find(p);
-        if (products.find(p) != products.end()) {
-            product->second -= quantity;
-            if (quantity <= 0)
-                products.erase(p);
-        }
-        notifyObserver();
-    }*/
+    virtual void removeProduct(Product* p, int quantity);
 
-   virtual void removeProduct(Product* p, int quantity){
-        auto product = products.find(p);
-        if (products.find(p) != products.end()) {
-            product->second -= quantity;
-            if (product->second <= 0)
-                products.erase(p);
-        }
-        notifyObserver();
-    }
-
-    /*const unique_ptr<Product>& findProduct(const string& name){
-        for(auto const& p : products)
-            if (p.first->getName() == name){
-                return std::move(p.first);
-            }
-        return nullptr;
-    }*/
 };
 
 
