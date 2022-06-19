@@ -12,7 +12,7 @@ shared_ptr<ShoppingList> ClientView::findList(string& listName) const {
     return nullptr;
 }
 
-void ClientView::addProductToList(string listName, Product& product) const {
+void ClientView::addProductToList(string listName, Product product) const {
         shared_ptr<ShoppingList> s = findList(listName);
         if (s != nullptr){
             s->addProduct(product);

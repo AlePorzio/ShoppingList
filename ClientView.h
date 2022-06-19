@@ -26,7 +26,7 @@ public:
 
     shared_ptr<ShoppingList> findList(string& listName) const;
 
-    void addProductToList(string listName, Product& product) const;
+    void addProductToList(string listName, Product product) const;
 
     void removeProductFromList(string listName, Product product) const;
 

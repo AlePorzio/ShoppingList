@@ -17,18 +17,17 @@ void ShoppingList::addProduct(const Product& product) {
     notifyObserver();
 }
 
-void ShoppingList::removeProduct(const Product& product){
-    for (auto & p : products)
-        if(p.getName() == product.getName()){
-            p.removeQuantity(product.getQuantity());
+void ShoppingList::removeProduct(const Product& product) {
+    for (auto p = products.begin(); p != products.end(); p++)
+        if (p->getName() == product.getName()) {
+            p->removeQuantity(product.getQuantity());
             lastOperation = to_string(product.getQuantity()) + " " + product.getName() + " removed from " + getListName() + ".";
+            if (p->getQuantity() <= 0) {
+                products.erase(p);
+                lastOperation = "All " + product.getName() + " removed from " + getListName() + ".";
+            }
+            notifyObserver();
         }
-    for(auto p = products.begin(); p != products.end(); p++)
-        if(p->getQuantity()<=0) {
-            products.erase(p);
-            lastOperation = "All " + product.getName() + " removed from " + getListName() + ".";
-        }
-    notifyObserver();
 }
 
 void ShoppingList::buyProducts() {
