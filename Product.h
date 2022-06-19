@@ -15,8 +15,6 @@ public:
 
     Product(string n, string c, int q, bool b = false): name{move(n)}, category(move(c)), quantity{q}, bought{b}{};
 
-    Product():name(""), category(""), quantity(0), bought(false){};
-
     int getQuantity() const {
         return quantity;
     }

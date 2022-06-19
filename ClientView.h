@@ -20,19 +20,23 @@ public:
         shoppingLists = {};
     };
 
-    void update(string list) override{
-        cout <<  list << endl;
+    void update(string lastChanges) override{
+        cout <<  lastChanges << endl;
     }
 
-    shared_ptr<ShoppingList> findList(string& listName) const;
+    shared_ptr<ShoppingList> findList(const string & listName) const;
 
-    void addProductToList(string listName, Product product) const;
+    void addProductToList(const string & listName, const Product& product) const;
 
-    void removeProductFromList(string listName, Product product) const;
+    void removeProductFromList(const string & listName, const Product& product) const;
 
-    void addList(shared_ptr<ShoppingList>& list);
+    void addList(shared_ptr<ShoppingList> list);
 
-    void buyList(string listName) const;
+    void removeList(shared_ptr<ShoppingList> list);
+
+    const list<shared_ptr<ShoppingList>> &getShoppingLists() const;
+
+    void buyList(const string & listName) const;
 
     virtual ~ClientView(){
         for(auto const& i : shoppingLists)

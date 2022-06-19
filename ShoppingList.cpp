@@ -23,18 +23,22 @@ void ShoppingList::removeProduct(const Product& product) {
             p->removeQuantity(product.getQuantity());
             lastOperation = to_string(product.getQuantity()) + " " + product.getName() + " removed from " + getListName() + ".";
             if (p->getQuantity() <= 0) {
-                products.erase(p);
+                p = products.erase(p);
                 lastOperation = "All " + product.getName() + " removed from " + getListName() + ".";
             }
-            notifyObserver();
         }
+    notifyObserver();
 }
 
 void ShoppingList::buyProducts() {
-    for(auto p : products){
+    for(auto &p : products){
         if(!p.isBought())
             p.setBought(true);
     }
     lastOperation = "Bought all products in " + getListName();
     notifyObserver();
+}
+
+const list<Observer *> &ShoppingList::getObservers() const {
+    return observers;
 }

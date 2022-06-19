@@ -13,8 +13,10 @@ int main() {
     shared_ptr<ShoppingList> shoppingList (new ShoppingList("ListaSpesa"));
 
     client->addList(shoppingList);
+    client->addList(make_shared<ShoppingList>("MarketList"));
     client->addProductToList( "ListaSpesa", milk);
     client->addProductToList("ListaSpesa", meat);
-    client->removeProductFromList("ListaSpesa", Product("Skimmed Milk", "Dairy", 2));
-
+    client->removeProductFromList("ListaSpesa", Product("Beef", "Meat", 2));
+    client->addProductToList("ListaSpesa", Product("Smarties", "Sweets", 5));
+    client->buyList("ListaSpesa");
 }

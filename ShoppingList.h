@@ -21,6 +21,10 @@ private:
 
     string listName;
     list<Observer*> observers;
+public:
+    const list<Observer *> &getObservers() const;
+
+private:
     list<Product> products;
     string lastOperation;
 
@@ -52,6 +56,8 @@ public:
     list<Product>& getListProduct(){
         return products;
     }
+
+
 
     void buyProducts();
 

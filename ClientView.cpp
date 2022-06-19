@@ -4,48 +4,55 @@
 
 #include "ClientView.h"
 
-shared_ptr<ShoppingList> ClientView::findList(string& listName) const {
+shared_ptr<ShoppingList> ClientView::findList(const string & listName) const {
     for (auto const &s: shoppingLists)
         if (s->getListName() == listName)
             return s;
-    cout << "List " << listName << "not found." << endl;
     return nullptr;
 }
 
-void ClientView::addProductToList(string listName, Product product) const {
+void ClientView::addProductToList(const string& listName, const Product& product) const {
         shared_ptr<ShoppingList> s = findList(listName);
         if (s != nullptr){
             s->addProduct(product);
-            //cout << "Product " << product.getName() << " added to list " << listName << "." << endl;
         }
 }
 
-void ClientView::removeProductFromList(string listName, Product product) const {
+void ClientView::removeProductFromList(const string& listName, const Product& product) const {
     shared_ptr<ShoppingList> s = findList(listName);
     if(s != nullptr) {
         s->removeProduct(product);
-        //cout << "Product " << product.getName() << " removed from list " << listName << endl;
     }
 }
 
-void ClientView::addList(shared_ptr<ShoppingList> &list) {
+void ClientView::addList(shared_ptr<ShoppingList> list) {
     bool found = false;
     for (auto const &s : shoppingLists) {
         if (list->getListName() == s->getListName()) {
             found = true;
         }
     }
-    if (found)
-        cout << list->getListName() << " already exists." << endl;
-    else {
+    if(!found) {
         shoppingLists.push_back(list);
         list->registerObserver(this);
-        cout << "List " << list->getListName() << " added." << endl;
     }
 }
 
-void ClientView::buyList(string listName) const {
+void ClientView::removeList(shared_ptr<ShoppingList> list) {
+    for(auto s = shoppingLists.begin(); s != shoppingLists.end(); s++){
+        if (list->getListName() == s->get()->getListName()) {
+            list->removeObserver(this);
+            s = shoppingLists.erase(s);
+        }
+    }
+}
+
+void ClientView::buyList(const string & listName) const {
     shared_ptr<ShoppingList> s = findList(listName);
     if (s != nullptr)
         s->buyProducts();
+}
+
+const list<shared_ptr<ShoppingList>> &ClientView::getShoppingLists() const {
+    return shoppingLists;
 }
