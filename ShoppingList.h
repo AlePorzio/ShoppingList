@@ -51,7 +51,7 @@ public:
         listName = list;
     }
 
-    list<Product>& getListProduct(){
+    const list<Product>& getListProduct() const{
         return products;
     }
 

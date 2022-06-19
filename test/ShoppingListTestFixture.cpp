@@ -9,10 +9,12 @@
 class ShoppingListTestFixture : public ::testing::Test {
 
 protected:
+
     virtual void SetUp() {
         s = make_shared<ShoppingList>("testList");
     }
-    shared_ptr<ShoppingList> s{};
+
+    shared_ptr<ShoppingList> s;
 };
 
 TEST_F(ShoppingListTestFixture, Constructor){
