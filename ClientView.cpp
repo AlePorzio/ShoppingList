@@ -20,7 +20,7 @@ void ClientView::addProductToList(string listName, Product& product) const {
         }
 }
 
-void ClientView::removeProductFromList(string listName, Product& product) const {
+void ClientView::removeProductFromList(string listName, Product product) const {
     shared_ptr<ShoppingList> s = findList(listName);
     if(s != nullptr) {
         s->removeProduct(product);

@@ -28,7 +28,7 @@ public:
 
     void addProductToList(string listName, Product& product) const;
 
-    void removeProductFromList(string listName, Product& product) const;
+    void removeProductFromList(string listName, Product product) const;
 
     void addList(shared_ptr<ShoppingList>& list);
 

@@ -15,6 +15,6 @@ int main() {
     client->addList(shoppingList);
     client->addProductToList( "ListaSpesa", milk);
     client->addProductToList("ListaSpesa", meat);
-    client->removeProductFromList("ListaSpesa", milk);
+    client->removeProductFromList("ListaSpesa", Product("Skimmed Milk", "Dairy", 2));
 
 }
