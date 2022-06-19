@@ -21,6 +21,8 @@ public:
 
     virtual void notifyObserver() = 0;
 
+    virtual ~Subject(){};
+
 };
 
 

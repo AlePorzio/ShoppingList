@@ -5,12 +5,15 @@
 #ifndef SHOPPINGLIST_OBSERVER_H
 #define SHOPPINGLIST_OBSERVER_H
 
+#include <string>
 class ShoppingList;
 
 class Observer {
 public:
 
-    virtual void update(std::string listName) = 0;
+    virtual void update(std::string lastOperation) = 0;
+
+    virtual ~Observer(){};
 
 };
 

@@ -8,8 +8,8 @@
 #include <list>
 #include <memory>
 #include <string>
-#include <map>
 #include <iostream>
+#include <utility>
 #include "Subject.h"
 #include "Observer.h"
 #include "Product.h"
@@ -21,7 +21,8 @@ private:
 
     string listName;
     list<Observer*> observers;
-    std::map<Product*, int> products;
+    list<Product> products;
+    string lastOperation;
 
 public:
 
@@ -29,7 +30,7 @@ public:
 
     void notifyObserver() override{
         for(auto const& o : observers)
-            o->update(listName);
+            o->update(lastOperation);
     }
 
     void registerObserver(Observer* o) override{
@@ -48,13 +49,15 @@ public:
         listName = list;
     }
 
-    const map<Product*, int> &getProducts() const {
+    list<Product>& getListProduct(){
         return products;
     }
 
-    virtual void addProduct(Product* p, int quantity);
+    void buyProducts();
 
-    virtual void removeProduct(Product* p, int quantity);
+    virtual void addProduct(const Product & product);
+
+    virtual void removeProduct(const Product & product);
 
 };
 

@@ -2,9 +2,9 @@
 // Created by Alessandro on 15/06/2022.
 //
 
-#include "Client.h"
+#include "ClientView.h"
 
-shared_ptr<ShoppingList> Client::findList(string listName) const {
+shared_ptr<ShoppingList> ClientView::findList(string& listName) const {
     for (auto const &s: shoppingLists)
         if (s->getListName() == listName)
             return s;
@@ -12,25 +12,23 @@ shared_ptr<ShoppingList> Client::findList(string listName) const {
     return nullptr;
 }
 
-void Client::addProductToList(string listName, Product *product, int quantity) const {
+void ClientView::addProductToList(string listName, Product& product) const {
         shared_ptr<ShoppingList> s = findList(listName);
         if (s != nullptr){
-            s->addProduct(product, quantity);
-            cout << "Product " << product->getName() << " added to list " << listName << "." << endl;
+            s->addProduct(product);
+            //cout << "Product " << product.getName() << " added to list " << listName << "." << endl;
         }
 }
 
-void Client::removeProductFromList(string listName, Product *product, int quantity) const {
+void ClientView::removeProductFromList(string listName, Product& product) const {
     shared_ptr<ShoppingList> s = findList(listName);
     if(s != nullptr) {
-        //if(s->findProduct(product->getName()) != nullptr) {
-        s->removeProduct(product, quantity);
-        cout << "Product " << product->getName() << " removed from list " << listName << endl;
-        //}
+        s->removeProduct(product);
+        //cout << "Product " << product.getName() << " removed from list " << listName << endl;
     }
 }
 
-void Client::addList(shared_ptr<ShoppingList> &list) {
+void ClientView::addList(shared_ptr<ShoppingList> &list) {
     bool found = false;
     for (auto const &s : shoppingLists) {
         if (list->getListName() == s->getListName()) {
@@ -44,4 +42,10 @@ void Client::addList(shared_ptr<ShoppingList> &list) {
         list->registerObserver(this);
         cout << "List " << list->getListName() << " added." << endl;
     }
+}
+
+void ClientView::buyList(string listName) const {
+    shared_ptr<ShoppingList> s = findList(listName);
+    if (s != nullptr)
+        s->buyProducts();
 }

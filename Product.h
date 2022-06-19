@@ -13,7 +13,9 @@ class Product {
 
 public:
 
-    Product(string n, string c, int q, bool b = true): name{move(n)}, category(move(c)), quantity{q}, bought{b}{};
+    Product(string n, string c, int q, bool b = false): name{move(n)}, category(move(c)), quantity{q}, bought{b}{};
+
+    Product():name(""), category(""), quantity(0), bought(false){};
 
     int getQuantity() const {
         return quantity;
@@ -29,6 +31,22 @@ public:
 
     void setName(const string &n) {
         Product::name = n;
+    }
+
+    void addQuantity(int q){
+        quantity += q;
+    }
+
+    void removeQuantity(int q){
+        quantity -= q;
+    }
+
+    bool isBought() const {
+        return bought;
+    }
+
+    void setBought(bool b) {
+        bought = b;
     }
 
 private:
