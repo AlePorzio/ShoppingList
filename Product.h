@@ -13,14 +13,14 @@ class Product {
 
 public:
 
-    Product(string n, string c, float p, bool a = true): name{move(n)}, category(move(c)), price{p}, available{a}{};
+    Product(string n, string c, int q, bool b = true): name{move(n)}, category(move(c)), quantity{q}, bought{b}{};
 
-    float getPrice() const {
-        return price;
+    int getQuantity() const {
+        return quantity;
     }
 
-    void setPrice(float p) {
-        price = p;
+    void setQuantity(int q) {
+        quantity = q;
     }
 
     const string &getName() const {
@@ -31,20 +31,12 @@ public:
         Product::name = n;
     }
 
-    bool getAvailable() const {
-        return available;
-    }
-
-    void setAvailable(int i) {
-        available = i;
-    }
-
 private:
 
     string name;
     string category;
-    float price;
-    bool available;
+    int quantity;
+    bool bought;
 };
 
 
