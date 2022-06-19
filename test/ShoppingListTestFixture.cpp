@@ -82,9 +82,9 @@ TEST_F(ShoppingListTestFixture, RemoveObserverTest){
     ASSERT_EQ(s->getObservers().empty(), true);
 }
 
-TEST_F(ShoppingListTestFixture, NotifyObserverTest){
+/*TEST_F(ShoppingListTestFixture, NotifyObserverTest){
     ClientView clientView1, clientView2;
     clientView1.addList(s);
     clientView2.addList(s);
     s->notifyObserver();
-}
+}*/

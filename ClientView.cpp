@@ -25,7 +25,7 @@ void ClientView::removeProductFromList(const string& listName, const Product& pr
     }
 }
 
-void ClientView::addList(shared_ptr<ShoppingList> list) {
+void ClientView::addList(const shared_ptr<ShoppingList> & list) {
     bool found = false;
     for (auto const &s : shoppingLists) {
         if (list->getListName() == s->getListName()) {
@@ -38,7 +38,7 @@ void ClientView::addList(shared_ptr<ShoppingList> list) {
     }
 }
 
-void ClientView::removeList(shared_ptr<ShoppingList> list) {
+void ClientView::removeList(const shared_ptr<ShoppingList> & list) {
     for(auto s = shoppingLists.begin(); s != shoppingLists.end(); s++){
         if (list->getListName() == s->get()->getListName()) {
             list->removeObserver(this);
@@ -55,4 +55,8 @@ void ClientView::buyList(const string & listName) const {
 
 const list<shared_ptr<ShoppingList>> &ClientView::getShoppingLists() const {
     return shoppingLists;
+}
+
+const string &ClientView::getName() const {
+    return name;
 }

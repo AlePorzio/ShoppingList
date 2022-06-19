@@ -24,15 +24,17 @@ public:
         cout <<  lastChanges << endl;
     }
 
+    const string &getName() const;
+
     shared_ptr<ShoppingList> findList(const string & listName) const;
 
     void addProductToList(const string & listName, const Product& product) const;
 
     void removeProductFromList(const string & listName, const Product& product) const;
 
-    void addList(shared_ptr<ShoppingList> list);
+    void addList(const shared_ptr<ShoppingList>& list);
 
-    void removeList(shared_ptr<ShoppingList> list);
+    void removeList(const shared_ptr<ShoppingList> & list);
 
     const list<shared_ptr<ShoppingList>> &getShoppingLists() const;
 

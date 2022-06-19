@@ -11,13 +11,25 @@
 class ClientViewTestFixture : public ::testing::Test {
 
 protected:
+
     virtual void SetUp() {
         c.addList(std::make_shared<ShoppingList> ("testList"));
         c.addProductToList("testList", Product("testProduct", "testCategory",1));
     }
 
+    virtual void TearDown(){
+        c.removeList(c.findList("testList"));
+    }
+
     ClientView c;
 };
+
+
+TEST(ClientViewTest, DefaultConstructor){
+    ClientView c;
+    ASSERT_EQ(c.getName(), "");
+    ASSERT_EQ(c.getShoppingLists().empty(), true);
+}
 
 TEST_F(ClientViewTestFixture, AddListTest){
     int numList = 0;
@@ -43,16 +55,21 @@ TEST_F(ClientViewTestFixture, FindListTest){
 }
 
 TEST_F(ClientViewTestFixture, RemoveListTest){
-    c.removeList(c.findList("testList"));
-    ASSERT_EQ(c.getShoppingLists().empty(), true);
+    c.addList(make_shared<ShoppingList>("testList1"));
     c.addList(make_shared<ShoppingList>("testList2"));
     c.addList(make_shared<ShoppingList>("testList3"));
-    c.removeList(c.findList("testList2"));
     int numList = 0;
     for(auto const& i : c.getShoppingLists()){
         numList++;
     }
-    ASSERT_EQ(numList, 1);
+    ASSERT_EQ(numList, 4);
+    c.removeList(c.findList("testList2"));
+    c.removeList(c.findList("testList3"));
+    numList = 0;
+    for(auto const& i : c.getShoppingLists()){
+        numList++;
+    }
+    ASSERT_EQ(numList, 2);
 }
 
 TEST_F(ClientViewTestFixture, AddProductToListTest) {

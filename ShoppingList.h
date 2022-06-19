@@ -21,10 +21,6 @@ private:
 
     string listName;
     list<Observer*> observers;
-public:
-    const list<Observer *> &getObservers() const;
-
-private:
     list<Product> products;
     string lastOperation;
 
@@ -32,22 +28,24 @@ public:
 
     explicit ShoppingList(string l):listName(std::move(l)){};
 
-    void notifyObserver() override{
+    virtual void notifyObserver() override{
         for(auto const& o : observers)
             o->update(lastOperation);
     }
 
-    void registerObserver(Observer* o) override{
+    virtual void registerObserver(Observer* o) override{
         observers.push_back(o);
     }
 
-    void removeObserver(Observer* o) override{
+   virtual void removeObserver(Observer* o) override{
         observers.remove(o);
     }
 
     const string &getListName() const {
         return listName;
     }
+
+    const list<Observer *> &getObservers() const;
 
     void setListName(const string& list) {
         listName = list;
@@ -57,7 +55,7 @@ public:
         return products;
     }
 
-
+    virtual ~ShoppingList(){}
 
     void buyProducts();
 
