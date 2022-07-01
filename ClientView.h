@@ -54,6 +54,22 @@ public:
             list->printProductsToBuy();
     }
 
+    int getNumOfProductsInList(const string & listName) const{
+        auto list = findList(listName);
+        if(list != nullptr)
+            return list->getNumberOfProducts();
+        else
+            return 0;
+    }
+
+    int getNumOfProductsInListToBuy(const string & listName) const{
+        auto list = findList(listName);
+        if(list != nullptr)
+            return list->getNumberOfProductsToBuy();
+        else
+            return 0;
+    }
+
     virtual ~ClientView(){
         for(auto const& i : shoppingLists)
             i->removeObserver(this);

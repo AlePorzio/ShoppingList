@@ -83,3 +83,16 @@ void ShoppingList::printProductsToBuy() {
         }
     }
 }
+
+int ShoppingList::getNumberOfProducts() const{
+    return products.size();
+}
+
+int ShoppingList::getNumberOfProductsToBuy() const {
+    int numProducts = 0;
+    for(auto const & p : products){
+        if(!p.isBought())
+            numProducts++;
+    }
+    return numProducts;
+}

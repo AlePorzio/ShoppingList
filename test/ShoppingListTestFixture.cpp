@@ -73,3 +73,30 @@ TEST_F(ShoppingListTestFixture, PrintProductsCategoryOrderTest){
     categories.unique();
     ASSERT_EQ(categories.size(), 2);
 }
+
+TEST_F(ShoppingListTestFixture, GetNumberOfProductsTest){
+    ASSERT_EQ(s->getNumberOfProducts(), 0);
+    s->addProduct(Product("testProduct", "testCategory", 1));
+    s->addProduct(Product("testProduct1", "testCategory1", 1));
+    s->addProduct(Product("testProduct2", "testCategory", 2));
+    s->addProduct(Product("testProduct3", "testCategory1", 3));
+    ASSERT_EQ(s->getNumberOfProducts(), 4);
+    s->removeProduct(Product("testProduct1", "testCategory1", 1));
+    ASSERT_EQ(s->getNumberOfProducts(), 3);
+    s->removeProduct(Product("testProduct3", "testCategory1", 2));
+    ASSERT_EQ(s->getNumberOfProducts(),3);
+}
+
+TEST_F(ShoppingListTestFixture, GetNumberOfProductsToBuyTest){
+    s->addProduct(Product("testProduct", "testCategory", 1));
+    s->addProduct(Product("testProduct1", "testCategory1", 1));
+    s->addProduct(Product("testProduct2", "testCategory", 2));
+    ASSERT_EQ(s->getNumberOfProductsToBuy(), 3);
+    s->buyProduct(Product("testProduct", "testCategory", 1));
+    ASSERT_EQ(s->getNumberOfProductsToBuy(), 2);
+    s->buyProduct(Product("testProduct1", "testCategory1", 1));
+    s->buyProduct(Product("testProduct2", "testCategory", 2));
+    ASSERT_EQ(s->getNumberOfProductsToBuy(), 0);
+    s->setProductToNotBought(Product("testProduct1", "testCategory1", 1));
+    ASSERT_EQ(s->getNumberOfProductsToBuy(), 1);
+}

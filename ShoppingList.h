@@ -67,6 +67,10 @@ public:
 
     void printProductsToBuy();
 
+    int getNumberOfProducts() const;
+
+    int getNumberOfProductsToBuy() const;
+
 };
 
 
