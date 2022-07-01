@@ -38,7 +38,9 @@ public:
 
     const list<shared_ptr<ShoppingList>> &getShoppingLists() const;
 
-    void buyList(const string & listName) const;
+    void buyProduct(const string & listName, const Product& product) const;
+
+    void setProductToNotBought(const string & listName, const Product& product) const;
 
     virtual ~ClientView(){
         for(auto const& i : shoppingLists)

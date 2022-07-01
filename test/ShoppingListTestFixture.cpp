@@ -41,10 +41,7 @@ TEST_F(ShoppingListTestFixture, RemoveProductTest){
     s->removeProduct(Product("testProduct", "testCategory", 1));
     s->addProduct(Product("testProduct2", "testCategory2", 2));
     s->addProduct(Product("testProduct3", "testCategory2", 1));
-    int numProducts = 0;
-    for(auto const& i : s->getListProduct())
-        numProducts++;
-    ASSERT_EQ(numProducts, 2);
+    ASSERT_EQ(s->getListProduct().size(), 2);
     s->removeProduct(Product("testProduct2", "testCategory", 2));
     s->removeProduct(Product("testProduct3", "testCategory", 1));
     ASSERT_EQ(s->getListProduct().empty(), true);

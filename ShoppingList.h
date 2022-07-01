@@ -57,11 +57,17 @@ public:
 
     virtual ~ShoppingList(){}
 
-    void buyProducts();
+    void buyProduct(const Product & product);
+
+    void setProductToNotBought(const Product & product);
 
     virtual void addProduct(const Product & product);
 
     virtual void removeProduct(const Product & product);
+
+    void printProducts();
+
+    void printProductsToBuy();
 
 };
 

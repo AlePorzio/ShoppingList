@@ -30,15 +30,60 @@ void ShoppingList::removeProduct(const Product& product) {
     notifyObserver();
 }
 
-void ShoppingList::buyProducts() {
-    for(auto &p : products){
-        if(!p.isBought())
-            p.setBought(true);
-    }
-    lastOperation = "Bought all products in " + getListName();
-    notifyObserver();
-}
-
 const list<Observer *> &ShoppingList::getObservers() const {
     return observers;
+}
+
+void ShoppingList::buyProduct(const Product &product) {
+    bool changed = false;
+    for(auto & p : products)
+        if(p.getName() == product.getName() && p.getCategory() == product.getCategory() && !product.isBought()) {
+            p.setBought(true);
+            changed = true;
+        }
+    if(changed) {
+        lastOperation = "Bought " + to_string(product.getQuantity()) + " " +  product.getName() + " in " + getListName() + ".";
+        notifyObserver();
+    }
+}
+
+void ShoppingList::setProductToNotBought(const Product &product)  {
+    bool changed = false;
+    for(auto & p : products)
+        if(p.getName() == product.getName() && p.getCategory() == product.getCategory() && product.isBought()) {
+            p.setBought(false);
+            changed = true;
+        }
+    if(changed) {
+        lastOperation = to_string(product.getQuantity())  +  product.getName() + " set to not bought in " + getListName() + ".";
+        notifyObserver();
+    }
+}
+
+void ShoppingList::printProducts() {
+    list<string> categories;
+    for (auto const & p :products)
+        categories.push_back(p.getCategory());
+    categories.sort();
+    categories.unique();
+    for(auto const & c : categories){
+        for (auto const& p : products){
+            if(p.getCategory() == c)
+                cout << p.getQuantity() << " " << p.getName() << endl;
+        }
+    }
+}
+
+void ShoppingList::printProductsToBuy() {
+    list<string> categories;
+    for (auto const & p :products)
+        categories.push_back(p.getCategory());
+    categories.sort();
+    categories.unique();
+    for(auto const & c : categories){
+        for (auto const& p : products){
+            if(p.getCategory() == c && !p.isBought())
+                cout << p.getQuantity() << " " << p.getName() << endl;
+        }
+    }
 }

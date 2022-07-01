@@ -47,6 +47,10 @@ public:
         bought = b;
     }
 
+    const string &getCategory() const{
+        return category;
+    }
+
 private:
 
     string name;

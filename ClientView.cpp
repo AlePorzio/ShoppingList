@@ -47,16 +47,24 @@ void ClientView::removeList(const shared_ptr<ShoppingList> & list) {
     }
 }
 
-void ClientView::buyList(const string & listName) const {
-    shared_ptr<ShoppingList> s = findList(listName);
-    if (s != nullptr)
-        s->buyProducts();
-}
-
 const list<shared_ptr<ShoppingList>> &ClientView::getShoppingLists() const {
     return shoppingLists;
 }
 
 const string &ClientView::getName() const {
     return name;
+}
+
+void ClientView::buyProduct(const string &listName, const Product &product) const {
+    shared_ptr<ShoppingList> s = findList(listName);
+    if (s != nullptr){
+        s->buyProduct(product);
+    }
+}
+
+void ClientView::setProductToNotBought(const string &listName, const Product &product) const {
+    shared_ptr<ShoppingList> s = findList(listName);
+    if (s != nullptr){
+        s->setProductToNotBought(product);
+    }
 }
