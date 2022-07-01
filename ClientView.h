@@ -42,6 +42,18 @@ public:
 
     void setProductToNotBought(const string & listName, const Product& product) const;
 
+    void printProductsInList(const string & listName) const{
+        auto list = findList(listName);
+        if(list != nullptr)
+            list->printProducts();
+    }
+
+    void printProductsToBuyInList(const string & listName) const{
+        auto list = findList(listName);
+        if(list != nullptr)
+            list->printProductsToBuy();
+    }
+
     virtual ~ClientView(){
         for(auto const& i : shoppingLists)
             i->removeObserver(this);
