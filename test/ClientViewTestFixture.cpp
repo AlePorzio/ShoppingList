@@ -58,17 +58,9 @@ TEST_F(ClientViewTestFixture, RemoveListTest){
     c.addList(make_shared<ShoppingList>("testList1"));
     c.addList(make_shared<ShoppingList>("testList2"));
     c.addList(make_shared<ShoppingList>("testList3"));
-    /*int numList = 0;
-    for(auto const& i : c.getShoppingLists()){
-        numList++;
-    }*/
     ASSERT_EQ(c.getShoppingLists().size(), 4);
     c.removeList(c.findList("testList2"));
     c.removeList(c.findList("testList3"));
-    /*numList = 0;
-    for(auto const& i : c.getShoppingLists()){
-        numList++;
-    }*/
     ASSERT_EQ(c.getShoppingLists().size(), 2);
 }
 
@@ -76,9 +68,6 @@ TEST_F(ClientViewTestFixture, AddProductToListTest) {
     ASSERT_EQ(c.findList("testList")->getListProduct().begin()->getName(), "testProduct");
     c.addProductToList("testList", Product("testProduct2", "testCategory",1));
     c.addProductToList("testList", Product("testProduct3", "testCategory",2));
-    /*int numProducts = 0;
-    for(auto const& i : c.findList("testList")->getListProduct())
-        numProducts++;*/
     ASSERT_EQ(c.findList("testList")->getListProduct().size(), 3);
 }
 
@@ -88,8 +77,20 @@ TEST_F(ClientViewTestFixture, RemoveProductFromListTest){
     c.addProductToList("testList", Product("testProduct2", "testCategory",1));
     c.addProductToList("testList", Product("testProduct3", "testCategory",2));
     c.removeProductFromList("testList", Product("testProduct2", "testCategory",1));
-    /*int numProducts = 0;
-    for(auto const& i : c.findList("testList")->getListProduct())
-        numProducts++;*/
     ASSERT_EQ(c.findList("testList")->getListProduct().size(), 1);
+}
+
+TEST_F(ClientViewTestFixture, BuyProductTest){
+    ASSERT_EQ(c.findList("testList")->getListProduct().begin()->isBought(), false);
+    c.buyProduct("testList", Product("testProduct", "testCategory",1));
+    ASSERT_EQ(c.findList("testList")->getListProduct().begin()->isBought(), true);
+}
+
+TEST_F(ClientViewTestFixture, SetProductToNotBoughtTest){
+    shared_ptr<ShoppingList> testList = c.findList("testList");
+    ASSERT_EQ(testList->getListProduct().begin()->isBought(), false);
+    testList->buyProduct(Product("testProduct", "testCategory", 1));
+    ASSERT_EQ(testList->getListProduct().begin()->isBought(), true);
+    testList->setProductToNotBought(Product("testProduct", "testCategory", 1));
+    ASSERT_EQ(testList->getListProduct().begin()->isBought(), false);
 }

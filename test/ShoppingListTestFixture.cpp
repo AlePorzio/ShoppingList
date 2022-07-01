@@ -47,43 +47,29 @@ TEST_F(ShoppingListTestFixture, RemoveProductTest){
     ASSERT_EQ(s->getListProduct().empty(), true);
 }
 
-TEST_F(ShoppingListTestFixture, BuyProductsTest){
-    s->addProduct(Product("testProduct1", "testCategory", 1));
-    s->addProduct(Product("testProduct2", "testCategory", 3));
-    s->addProduct(Product("testProduct2", "testCategory", 2, true));
-    s->buyProducts();
-    for(auto const & p : s->getListProduct()){
-        ASSERT_EQ(p.isBought(), true);
-    }
+TEST_F(ShoppingListTestFixture, BuyProductTest){
+    s->addProduct(Product("testProduct", "testCategory", 1));
+    ASSERT_EQ(s->getListProduct().begin()->isBought(), false);
+    s->buyProduct(Product("testProduct", "testCategory", 1));
+    ASSERT_EQ(s->getListProduct().begin()->isBought(), true);
 }
 
-TEST_F(ShoppingListTestFixture, RegisterObserverTest){
-    ASSERT_EQ(s->getObservers().empty(), true);
-    ClientView clientView1, clientView2;
-    clientView1.addList(s);
-    clientView2.addList(s);
-    int numObservers = 0;
-    for(auto const & i : s->getObservers())
-        numObservers++;
-    ASSERT_EQ(numObservers, 2);
+TEST_F(ShoppingListTestFixture, SetProductToNotBoughtTest){
+    s->addProduct(Product("testProduct", "testCategory", 1, true));
+    ASSERT_EQ(s->getListProduct().begin()->isBought(), true);
+    s->setProductToNotBought(Product("testProduct", "testCategory", 1));
+    ASSERT_EQ(s->getListProduct().begin()->isBought(), false);
 }
 
-TEST_F(ShoppingListTestFixture, RemoveObserverTest){
-    ClientView clientView1, clientView2;
-    clientView1.addList(s);
-    clientView2.addList(s);
-    clientView1.removeList(s);
-    int numObservers = 0;
-    for(auto const & i : s->getObservers())
-        numObservers++;
-    ASSERT_EQ(numObservers, 1);
-    clientView2.removeList(s);
-    ASSERT_EQ(s->getObservers().empty(), true);
+TEST_F(ShoppingListTestFixture, PrintProductsCategoryOrderTest){
+    s->addProduct(Product("testProduct", "testCategory", 1));
+    s->addProduct(Product("testProduct1", "testCategory1", 1));
+    s->addProduct(Product("testProduct2", "testCategory", 1));
+    s->addProduct(Product("testProduct3", "testCategory1", 1));
+    list<string> categories;
+    for (auto const & p : s->getListProduct())
+        categories.push_back(p.getCategory());
+    categories.sort();
+    categories.unique();
+    ASSERT_EQ(categories.size(), 2);
 }
-
-/*TEST_F(ShoppingListTestFixture, NotifyObserverTest){
-    ClientView clientView1, clientView2;
-    clientView1.addList(s);
-    clientView2.addList(s);
-    s->notifyObserver();
-}*/

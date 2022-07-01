@@ -30,10 +30,6 @@ void ShoppingList::removeProduct(const Product& product) {
     notifyObserver();
 }
 
-const list<Observer *> &ShoppingList::getObservers() const {
-    return observers;
-}
-
 void ShoppingList::buyProduct(const Product &product) {
     bool changed = false;
     for(auto & p : products)
@@ -50,12 +46,12 @@ void ShoppingList::buyProduct(const Product &product) {
 void ShoppingList::setProductToNotBought(const Product &product)  {
     bool changed = false;
     for(auto & p : products)
-        if(p.getName() == product.getName() && p.getCategory() == product.getCategory() && product.isBought()) {
+        if(p.getName() == product.getName() && p.getCategory() == product.getCategory() && p.isBought()) {
             p.setBought(false);
             changed = true;
         }
     if(changed) {
-        lastOperation = to_string(product.getQuantity())  +  product.getName() + " set to not bought in " + getListName() + ".";
+        lastOperation = to_string(product.getQuantity()) + " " +  product.getName() + " set to not bought in " + getListName() + ".";
         notifyObserver();
     }
 }

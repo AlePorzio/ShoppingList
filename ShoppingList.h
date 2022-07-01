@@ -45,8 +45,6 @@ public:
         return listName;
     }
 
-    const list<Observer *> &getObservers() const;
-
     void setListName(const string& list) {
         listName = list;
     }
